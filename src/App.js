@@ -1,46 +1,59 @@
-import React, { useState } from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
 
-const App = props => {
+class App extends Component {
 
-  const [personsState, setPersons] = useState({
+  state = {
     persons: [
       {name: "Byakuya", age:20},
       {name: "Ichigo", age: null},
       {name: "Orihime", age: null}
     ],
     isDisplayed: false
-  });
+  };
 
-  const showNames = () => {
-    setPersons({
-      persons: personsState.persons,
-      isDisplayed: !personsState.isDisplayed
+  showNames = () => {
+    this.setState({
+      isDisplayed: !this.state.isDisplayed
     });
   }
 
-  const changeAge = (index, event) => {
-    personsState.persons[index].age = event.target.value;
-    setPersons({
-      persons: personsState.persons,
-      isDisplayed: personsState.isDisplayed
+  changeAge = (index, event) => {
+    const persons = [...this.state.persons];
+    persons[index].age = event.target.value;
+    this.setState({
+      persons: persons
     });
   }
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <button onClick={showNames}>{personsState.isDisplayed ? "Hide names": "Show names"}</button>
-        { personsState.isDisplayed ?
-          personsState.persons.map((person, index) => 
-            <Person name={person.name} age={person.age} changed={changeAge.bind(this, index)}></Person>
-          )
-          : null
-        }
-      </header>
-    </div>
-  );
+  removePerson = (index) => {
+     const persons = [...this.state.persons];
+     persons.splice(index, 1);
+     this.setState({
+       persons: persons
+     })
+  }
+
+  render() { 
+    return (
+      <div className="App">
+        <header className="App-header">
+          <button onClick={this.showNames}>{this.state.isDisplayed ? "Hide names": "Show names"}</button>
+            { this.state.isDisplayed ?
+              this.state.persons.map((person, index) => {
+                return (
+                  <div style={{display: "flex"}}>
+                    <div><Person name={person.name} age={person.age} changed={this.changeAge.bind(this, index)}></Person></div>
+                    <div><button style={{height:"100%"}} onClick={this.removePerson.bind(this, index)}>Remove</button></div>
+                  </div>
+                )
+            })
+              : null
+            }
+        </header>
+      </div>
+    );
+  }
 }
 export default App;
