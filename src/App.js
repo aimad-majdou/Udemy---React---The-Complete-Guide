@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Radium from 'radium';
 import Person from './Person/Person';
 
 class App extends Component {
@@ -36,16 +37,44 @@ class App extends Component {
   }
 
   render() { 
+
+    const buttonStyle = {
+      backgroundColor: "transparent",
+      borderWidth: "2px",
+      borderStyle: "solid",
+      borderColor: "#f44336",
+      color: "white",
+      padding: "16px 32px",
+      textAlign: "center",
+      textDecoration: "none",
+      display: "inline-block",
+      fontSize: "16px",
+      transitionDuration: "0.4s",
+      cursor: "pointer"
+  }
+
+  const hideButtonStyle = {...buttonStyle};
+  hideButtonStyle.borderColor = "white";
+  hideButtonStyle.marginBottom = "50px";
+
+  buttonStyle[":hover"] = {
+    backgroundColor: "white",
+    color: "black",
+    borderWidth: "2px",
+    borderStyle: "solid",
+    borderColor: "#f44336"
+  }
+
     return (
       <div className="App">
         <header className="App-header">
-          <button onClick={this.showNames}>{this.state.isDisplayed ? "Hide names": "Show names"}</button>
+          <button style={hideButtonStyle} onClick={this.showNames} key="key1">{this.state.isDisplayed ? "Hide names": "Show names"}</button>
             { this.state.isDisplayed ?
               this.state.persons.map((person, index) => {
                 return (
-                  <div style={{display: "flex"}} key={person.id}>
-                    <div><Person name={person.name} age={person.age} changed={this.changeAge.bind(this, index)} ></Person></div>
-                    <div><button style={{height:"100%"}} onClick={this.removePerson.bind(this, index)}>Remove</button></div>
+                  <div style={{display: "flex", alignItems: "center", justifyContent: "center"}} key={person.id}>
+                    <div style={{border: "2px solid white"}}><Person name={person.name} age={person.age} changed={this.changeAge.bind(this, index)} ></Person></div>
+                    <div style={{maxWidth: "50%", marginLeft: "20px"}}><button style={buttonStyle} key={"b" + index} onClick={this.removePerson.bind(this, index)}>Remove</button></div>
                   </div>
                 )
             })
@@ -56,4 +85,4 @@ class App extends Component {
     );
   }
 }
-export default App;
+export default Radium(App);
