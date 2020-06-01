@@ -8,8 +8,8 @@ const App = props => {
   const [personsState, setPersons] = useState({
     persons: [
       {name: "Byakuya", age:20},
-      {name: "Ichigo"},
-      {name: "Orihime"}
+      {name: "Ichigo", age: null},
+      {name: "Orihime", age: null}
     ],
     isDisplayed: false
   });
@@ -21,8 +21,8 @@ const App = props => {
     });
   }
 
-  const changeAge = (event) => {
-    personsState.persons[0].age = event.target.value;
+  const changeAge = (index, event) => {
+    personsState.persons[index].age = event.target.value;
     setPersons({
       persons: personsState.persons,
       isDisplayed: personsState.isDisplayed
@@ -34,11 +34,9 @@ const App = props => {
       <header className="App-header">
         <button onClick={showNames}>{personsState.isDisplayed ? "Hide names": "Show names"}</button>
         { personsState.isDisplayed ?
-          <div>
-            <Person name={personsState.persons[0].name} age={personsState.persons[0].age} changed={changeAge}></Person>
-            <Person name={personsState.persons[1].name} age={personsState.persons[1].age}>></Person>
-            <Person name={personsState.persons[2].name} age={personsState.persons[2].age}>></Person>
-          </div>
+          personsState.persons.map((person, index) => 
+            <Person name={person.name} age={person.age} changed={changeAge.bind(this, index)}></Person>
+          )
           : null
         }
       </header>
