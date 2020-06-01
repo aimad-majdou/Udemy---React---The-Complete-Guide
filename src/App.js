@@ -6,9 +6,9 @@ class App extends Component {
 
   state = {
     persons: [
-      {name: "Byakuya", age:20},
-      {name: "Ichigo", age: null},
-      {name: "Orihime", age: null}
+      {id: "1", name: "Byakuya", age: 20},
+      {id: "2", name: "Ichigo", age: ""},
+      {id: "3", name: "Orihime", age: ""}
     ],
     isDisplayed: false
   };
@@ -43,8 +43,8 @@ class App extends Component {
             { this.state.isDisplayed ?
               this.state.persons.map((person, index) => {
                 return (
-                  <div style={{display: "flex"}}>
-                    <div><Person name={person.name} age={person.age} changed={this.changeAge.bind(this, index)}></Person></div>
+                  <div style={{display: "flex"}} key={person.id}>
+                    <div><Person name={person.name} age={person.age} changed={this.changeAge.bind(this, index)} ></Person></div>
                     <div><button style={{height:"100%"}} onClick={this.removePerson.bind(this, index)}>Remove</button></div>
                   </div>
                 )
