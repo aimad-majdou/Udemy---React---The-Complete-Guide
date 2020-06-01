@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Radium from 'radium';
-import Person from './Person/Person';
+import Persons from '../Components/Persons/Persons';
 
 class App extends Component {
 
@@ -50,35 +50,16 @@ class App extends Component {
       display: "inline-block",
       fontSize: "16px",
       transitionDuration: "0.4s",
-      cursor: "pointer"
+      cursor: "pointer",
+      borderColor: "white",
+      marginBottom: "50px"
   }
-
-  const hideButtonStyle = {...buttonStyle};
-  hideButtonStyle.borderColor = "white";
-  hideButtonStyle.marginBottom = "50px";
-
-  buttonStyle[":hover"] = {
-    backgroundColor: "white",
-    color: "black",
-    borderWidth: "2px",
-    borderStyle: "solid",
-    borderColor: "#f44336"
-  }
-
     return (
       <div className="App">
         <header className="App-header">
-          <button style={hideButtonStyle} onClick={this.showNames} key="key1">{this.state.isDisplayed ? "Hide names": "Show names"}</button>
+          <button style={buttonStyle} onClick={this.showNames} key="key1">{this.state.isDisplayed ? "Hide names": "Show names"}</button>
             { this.state.isDisplayed ?
-              this.state.persons.map((person, index) => {
-                return (
-                  <div style={{display: "flex", alignItems: "center", justifyContent: "center"}} key={person.id}>
-                    <div style={{border: "2px solid white"}}><Person name={person.name} age={person.age} changed={this.changeAge.bind(this, index)} ></Person></div>
-                    <div style={{maxWidth: "50%", marginLeft: "20px"}}><button style={buttonStyle} key={"b" + index} onClick={this.removePerson.bind(this, index)}>Remove</button></div>
-                  </div>
-                )
-            })
-              : null
+              <Persons persons={this.state.persons} removePerson={this.removePerson} changeAge={this.changeAge}/> : null
             }
         </header>
       </div>
