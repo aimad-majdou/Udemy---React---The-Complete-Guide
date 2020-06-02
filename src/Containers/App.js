@@ -20,7 +20,7 @@ class App extends Component {
     });
   }
 
-  changeAge = (index, event) => {
+  changeAge = (event, index) => {
     const persons = [...this.state.persons];
     persons[index].age = event.target.value;
     this.setState({

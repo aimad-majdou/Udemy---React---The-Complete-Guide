@@ -26,8 +26,8 @@ const persons = (props) => props.persons.map((person, index) => {
       }
 
     return (
-      <div style={{display: "flex", alignItems: "center", justifyContent: "center"}} key={person.id}>
-        <div style={{border: "2px solid white"}}><Person name={person.name} age={person.age} changed={props.changeAge.bind(this, index)} ></Person></div>
+      <div style={{display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "20px"}} key={person.id}>
+        <div style={{border: "2px solid white"}}><Person name={person.name} age={person.age} changed={event => props.changeAge(event, index)} ></Person></div>
         <div style={{maxWidth: "50%", marginLeft: "20px"}}><button style={buttonStyle} key={"b" + index} onClick={props.removePerson.bind(this, index)}>Remove</button></div>
       </div>
     )
